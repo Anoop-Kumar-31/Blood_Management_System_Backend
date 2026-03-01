@@ -1,5 +1,5 @@
 const DonorModel = require('../models/donor.model');
-const { v4: uuidv4 } = require('uuid');
+const crypto = require('crypto');
 
 // create a map for whcihc blood can take from which blood
 const bloodCompatibility = {
@@ -37,7 +37,7 @@ class DonorController {
             }
 
             const donor = await DonorModel.create({
-                uuid: uuidv4(),
+                uuid: crypto.randomUUID(),
                 Name: name,
                 Age: Number(age),               // ensure number
                 PhoneNumber: phone,
