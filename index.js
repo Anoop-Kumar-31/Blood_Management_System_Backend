@@ -14,6 +14,7 @@ const allowedOrigins = process.env.ALLOWED_ORIGIN
     ? process.env.ALLOWED_ORIGIN.split(',').map(o => o.trim())
     : ['http://localhost:5173'];
 
+console.log(allowedOrigins);
 // Connect to Database
 connectDB();
 
