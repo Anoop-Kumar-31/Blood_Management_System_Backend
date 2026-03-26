@@ -12,6 +12,7 @@ class AuthController {
     // @route   POST /api/auth/send-otp
     // @access  Public
     async sendOtp(req, res) {
+        console.log("sendOtp initiated!");
         const { email } = req.body;
         if (!email) {
             return res.status(400).json({ error: 'Email is required' });
@@ -31,7 +32,7 @@ class AuthController {
             await OtpLogModel.findOneAndUpdate(
                 { email },
                 { $inc: { otpRequestCount: 1 }, lastRequestedAt: new Date() },
-                { upsert: true, new: true }
+                { upsert: true, returnDocument: 'after' }
             );
 
             // Clean up expired OTPs periodically (lazy evaluation here)
@@ -51,6 +52,7 @@ class AuthController {
     // @route   POST /api/auth/verify-otp
     // @access  Public
     async verifyOtp(req, res) {
+        console.log("verifyOtp initiated!");
         const { email, otp } = req.body;
 
         if (!email || !otp) {
@@ -76,7 +78,7 @@ class AuthController {
             await OtpLogModel.findOneAndUpdate(
                 { email },
                 { $inc: { otpVerifiedCount: 1 }, lastVerifiedAt: new Date() },
-                { upsert: true, new: true }
+                { upsert: true, returnDocument: 'after' }
             );
 
             res.status(200).json({ success: true, message: 'OTP verified successfully' });

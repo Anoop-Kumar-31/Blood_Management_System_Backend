@@ -57,7 +57,7 @@ class EmailService {
                         <p class="message" style="font-size: 14px; margin-bottom: 40px;">This code is valid for 10 minutes. Please do not share this code with anyone.</p>
                         
                         <div class="footer">
-                            <p style="margin: 0 0 8px 0;"><b>HeartBeat Pvt. Limited</b><br>Chandigarh University, Mohali - 140413</p>
+                            <p style="margin: 0 0 8px 0;"><b>HeartBeat Pvt. Limited</b><br> By- <a href="https://github.com/Anoop-Kumar-31" style="color: #e11d48; text-decoration: none;">Anoop Kumar</a></p>
                             <p style="margin: 0;">Be the reason for someone's <span class="hero-text">heartbeat</span>.</p>
                         </div>
                     </div>
