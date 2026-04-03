@@ -1,0 +1,39 @@
+name: Keep MongoDB Awake
+on:
+  schedule:
+    - cron: '0 0 */15 * *' # Runs every 15 days (Safe margin for 30-day limit)
+  workflow_dispatch:
+
+jobs:
+  ping_mongo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install MongoDB Driver
+        run: npm install mongodb
+
+      - name: Ping Database
+        env:
+          MONGO_URI: ${{ secrets.MONGO_URI }}
+        run: |
+          node -e "
+          const { MongoClient } = require('mongodb');
+          async function run() {
+            const client = new MongoClient(process.env.MONGO_URI);
+            try {
+              await client.connect();
+              await client.db('admin').command({ ping: 1 });
+              console.log('MongoDB Ping Successful!');
+            } finally {
+              await client.close();
+            }
+          }
+          run().catch(console.dir);
+          "
